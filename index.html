@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Staatliches&display=swap" rel="stylesheet">
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
+        href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css"/>
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Weather Dashboard</title>
 </head>
@@ -26,34 +26,33 @@
             <!--  -->
             <div class="col-3">
                 <div>
-                    <h3 class="d-flex fw-bold">
+                    <h3 class="fw-bolder">
                         Search for a City:
                     </h3>
-                    <input type="text" class="w-100 p-2 mt-2 mb-3" placeholder="San Diego" id="">
-                    <button type="button" class="bg-info p-2 fw-bold text-light border-0 w-100 rounded">Search</button>
+                    <input type="text" id="city-input" class="w-100 p-2 mt-2 mb-3" placeholder="San Diego">
+                    <button type="button" id="search-btn" class="bg-info p-2 fw-bold text-light border-0 w-100 rounded">Search</button>
                 </div>
-                <ul id="city-list" class="list-group list-group-flush">
+                <ul id="city-list" class="list">
                 </ul>
             </div>
             <!--  -->
             <div class="col-9">
-                <div>
-                    <h3 class="d-flex fw-bold">
-                        Search for a City:
-                    </h3>
+                <div class="card border-secondary mb-3">
+                    <!-- <div class="card-header">Header</div> -->
+                    <div class="card-body text-primary">
+                        <h5 class="card-title">Primary card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
                 </div>
-                <ul id="city-list" class="list-group list-group-flush">
-                </ul>
             </div>
         </div>
     </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> -->
     <script src="./assets/js/script.js"></script>
 </body>
 
