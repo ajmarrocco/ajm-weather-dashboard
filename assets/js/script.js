@@ -12,27 +12,6 @@ var getCityName = function(){
     }
 }
 
-// var getCurrent = function(city){
-//     //variable for api for city, uses imperial units for Fahrenheit
-//     var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
-//     console.log(apiUrl);
-//     debugger;
-//     // make a get request to url
-//     fetch(apiUrl).then(function(response) {
-//         // request was successful
-//         if (response.ok) {
-//             response.json().then(function(data) {
-//             getFuture(data.coord.lon,data.coord.lat);
-//             displayCurrent(data);
-//             })
-//         } else {
-//         // if not successful, redirect to homepage
-//             window.alert("Please enter a city name");
-//             document.location.replace("./index.html");
-//         }
-//     })
-// }
-
 var getCurrent = function(city){
     //variable for api for city, uses imperial units for Fahrenheit
     var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
@@ -45,23 +24,19 @@ var getCurrent = function(city){
             response.json().then(function(data) {
             // getFuture(data.coord.lon,data.coord.lat);
             // displayCurrent(data);
-            var apiSecondUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&exclude=minutely,hourly&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
-            console.log(apiSecondUrl);
-            //debugger;
-            // make a get request to url
-            fetch(apiSecondUrl).then(function(response) {
-                // request was successful
-                if (response.ok) {
-                    response.json().then(function(information) {
-                    displayCurrent(data, information);
-                    //debugger;
-                    // displayUVI(data);
-                    // displayFuture(data);
-                    // getFuture(data.coord.lon,data.coord.lat)
-                    })
-                } 
-            })
-
+                var apiSecondUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&exclude=minutely,hourly&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
+                console.log(apiSecondUrl);
+                //debugger;
+                // make a get request to url
+                fetch(apiSecondUrl).then(function(response) {
+                    // request was successful
+                    if (response.ok) {
+                        response.json().then(function(information) {
+                        displayCurrent(data, information);
+                        //debugger;
+                        })
+                    } 
+                })
             })
         } else {
         // if not successful, redirect to homepage
@@ -71,36 +46,7 @@ var getCurrent = function(city){
     })
 }
 
-// var getFuture = function(longitiude, latitude){
-//     console.log("longitude " + longitiude);
-//     console.log("latitude " + latitude);
-
-//     var apiSecondUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitiude}&exclude=minutely,hourly&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
-//     console.log(apiSecondUrl);
-//     debugger;
-//     // make a get request to url
-//     fetch(apiSecondUrl).then(function(response) {
-//         // request was successful
-//         if (response.ok) {
-//             response.json().then(function(data) {
-//             // displayCurrent(data);
-//             debugger;
-//             displayUVI(data);
-//             // displayFuture(data);
-//             // getFuture(data.coord.lon,data.coord.lat)
-//             })
-//         } 
-//     })
-// }
-
-// var displayUVI = function(index){
-//     console.log("uvi " + index.current.uvi);
-//     uviEl = index.current.uvi;
-//     console.log(uviEl);
-//     return uviEl;
-// }
-
-var displayCurrent = function(info, information){
+var displayCurrent = function(data, information){
     //creates div for border of card
     var currentBorderEl = document.createElement("div");
     currentBorderEl.classList = "card border-secondary mb-3";
@@ -112,21 +58,23 @@ var displayCurrent = function(info, information){
     //creates title for body of card
     var currentTitleEl = document.createElement("h5");
     // currentTitleEl.classList = "50n";
-    currentTitleEl.textContent = `${info.name} (${info.dt}) ${info.weather[0].icon}`
+    currentTitleEl.textContent = `${data.name} (${data.dt}) http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+    currentTitleEl.classList = "pb-3";
     currentBodyEl.appendChild(currentTitleEl);
     //creates temperature p element
     var tempEl = document.createElement("p");
     //adds degree symbol
-    tempEl.textContent = `Temp: ${info.main.temp} \u00B0F`;
+    tempEl.textContent = `Temp: ${data.main.temp} \u00B0F`;
     currentBodyEl.appendChild(tempEl);
     //creates speed p element
     var speedEl = document.createElement("p");
     //rounds to the nearest hundredth and converts to MPH
-    speedEl.textContent = `Wind: ${Math.round(100* info.wind.speed * 2.23694)/100} MPH`;
+    speedEl.textContent = `Wind: ${Math.round(100* data.wind.speed * 2.23694)/100} MPH`;
     currentBodyEl.appendChild(speedEl);
     var humidityEl = document.createElement("p");
-    humidityEl.textContent = `Humidity: ${info.main.humidity} %`;
+    humidityEl.textContent = `Humidity: ${data.main.humidity} %`;
     currentBodyEl.appendChild(humidityEl);
+    //gets uv  index from second apiUrl
     var uviEl = document.createElement("p");
     uviEl.textContent = `UV Index: ${information.current.uvi}`;
     currentBodyEl.appendChild(uviEl);
