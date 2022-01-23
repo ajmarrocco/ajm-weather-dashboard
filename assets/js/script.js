@@ -60,16 +60,16 @@ var formattedDay = function(seconds){
 }
 
 
-//checks UVI value for favorable moderate, severe
+//checks UVI value for favorable, moderate, severe
 var checkUVI = function(index, element){
-    var uviSpanEl = document.createElement("span");
-    uviSpanEl.textContent = `${index}`;
-
     if(index > 6){
+        //if it is a severe index, make bg color red
         return element.classList = "bg-danger pt-1 pb-1 pl-3 pr-3 text-light rounded"
     } else if (index <= 6 && index >= 3){
+        //if it is a moderate index, make bg color yellow
         return element.classList = "bg-warning pt-1 pb-1 pl-3 pr-3 text-light rounded"
     } else {
+        //if it is a favorable index, make bg color green
         return element.classList = "bg-success pt-1 pb-1 pl-3 pr-3 text-light rounded"
     }
 }
@@ -115,19 +115,11 @@ var displayCurrent = function(data, information){
     var uviEl = document.createElement("p");
     var uviSpanEl = document.createElement("span");
     uviSpanEl.textContent = `${information.current.uvi}`;
-    // debugger;
-    // console.log(checkUVI(information.current.uvi));
+    // Checks UVI with UVI value and span element as parameters
     checkUVI(information.current.uvi, uviSpanEl);
-    // if(uviSpanEl.textContent > 6){
-    //     uviSpanEl.classList = "bg-danger pt-1 pb-1 pl-3 pr-3 text-light rounded"
-    // } else if (uviSpanEl.textContent <= 6 && uviSpanEl.textContent >= 3){
-    //     uviSpanEl.classList = "bg-warning pt-1 pb-1 pl-3 pr-3 text-light rounded"
-    // } else {
-    //     uviSpanEl.classList = "bg-success pt-1 pb-1 pl-3 pr-3 text-light rounded"
-    // }
-    // debugger;
+    //sets text for UV element
     uviEl.textContent = `UV Index: `;
-    // debugger;
+    //appends UVI element and span
     currentBodyEl.appendChild(uviEl);
     uviEl.appendChild(uviSpanEl);
 }
