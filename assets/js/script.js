@@ -79,6 +79,7 @@ var displayCurrent = function(data, information){
     iconEl.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
     //adds alt to the description of the weather
     iconEl.alt = `${data.weather[0].description}`;
+    //appends children to parent
     currentBodyEl.appendChild(currentTitleEl);
     currentTitleEl.appendChild(iconEl);
     //creates temperature p element
@@ -96,8 +97,18 @@ var displayCurrent = function(data, information){
     currentBodyEl.appendChild(humidityEl);
     //gets uv  index from second apiUrl
     var uviEl = document.createElement("p");
-    uviEl.textContent = `UV Index: ${information.current.uvi}`;
+    var uviSpanEl = document.createElement("span");
+    uviSpanEl.textContent = `${information.current.uvi}`;
+    if(uviSpanEl.textContent > 6){
+        uviSpanEl.classList = "bg-danger pt-1 pb-1 pl-3 pr-3 text-light rounded"
+    } else if (uviSpanEl.textContent <= 6 && uviSpanEl.textContent >= 3){
+        uviSpanEl.classList = "bg-warning pt-1 pb-1 pl-3 pr-3 text-light rounded"
+    } else {
+        uviSpanEl.classList = "bg-success pt-1 pb-1 pl-3 pr-3 text-light rounded"
+    }
+    uviEl.textContent = `UV Index: `;
     currentBodyEl.appendChild(uviEl);
+    uviEl.appendChild(uviSpanEl);
 }
 
 searchButtonEl.addEventListener("click", getCityName);
