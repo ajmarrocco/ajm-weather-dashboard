@@ -59,6 +59,22 @@ var formattedDay = function(seconds){
     return formattedDate;
 }
 
+
+//checks UVI value for favorable moderate, severe
+var checkUVI = function(index, element){
+    var uviSpanEl = document.createElement("span");
+    uviSpanEl.textContent = `${index}`;
+
+    if(index > 6){
+        return element.classList = "bg-danger pt-1 pb-1 pl-3 pr-3 text-light rounded"
+    } else if (index <= 6 && index >= 3){
+        return element.classList = "bg-warning pt-1 pb-1 pl-3 pr-3 text-light rounded"
+    } else {
+        return element.classList = "bg-success pt-1 pb-1 pl-3 pr-3 text-light rounded"
+    }
+}
+
+
 var displayCurrent = function(data, information){
     //creates div for border of card
     var currentBorderEl = document.createElement("div");
@@ -99,14 +115,19 @@ var displayCurrent = function(data, information){
     var uviEl = document.createElement("p");
     var uviSpanEl = document.createElement("span");
     uviSpanEl.textContent = `${information.current.uvi}`;
-    if(uviSpanEl.textContent > 6){
-        uviSpanEl.classList = "bg-danger pt-1 pb-1 pl-3 pr-3 text-light rounded"
-    } else if (uviSpanEl.textContent <= 6 && uviSpanEl.textContent >= 3){
-        uviSpanEl.classList = "bg-warning pt-1 pb-1 pl-3 pr-3 text-light rounded"
-    } else {
-        uviSpanEl.classList = "bg-success pt-1 pb-1 pl-3 pr-3 text-light rounded"
-    }
+    // debugger;
+    // console.log(checkUVI(information.current.uvi));
+    checkUVI(information.current.uvi, uviSpanEl);
+    // if(uviSpanEl.textContent > 6){
+    //     uviSpanEl.classList = "bg-danger pt-1 pb-1 pl-3 pr-3 text-light rounded"
+    // } else if (uviSpanEl.textContent <= 6 && uviSpanEl.textContent >= 3){
+    //     uviSpanEl.classList = "bg-warning pt-1 pb-1 pl-3 pr-3 text-light rounded"
+    // } else {
+    //     uviSpanEl.classList = "bg-success pt-1 pb-1 pl-3 pr-3 text-light rounded"
+    // }
+    // debugger;
     uviEl.textContent = `UV Index: `;
+    // debugger;
     currentBodyEl.appendChild(uviEl);
     uviEl.appendChild(uviSpanEl);
 }
