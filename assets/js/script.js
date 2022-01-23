@@ -57,8 +57,18 @@ var displayCurrent = function(data, information){
     currentBorderEl.appendChild(currentBodyEl);
     //creates title for body of card
     var currentTitleEl = document.createElement("h5");
-    // currentTitleEl.classList = "50n";
-    currentTitleEl.textContent = `${data.name} (${data.dt}) http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+    //adjusts UTC time based off of 
+    var newDT = data.dt + information.timezone_offset;
+    // console.log(data.dt);
+    // console.log(newDT);
+    var millisecondsDT = data.dt * 1000;
+    console.log(millisecondsDT);
+    var dateObject = new Date(millisecondsDT);
+    console.log(dateObject);
+    var humanDateFormat = dateObject.toLocaleString();
+    console.log(humanDateFormat);
+    var formattedDay = humanDateFormat.split(",")[0];
+    currentTitleEl.textContent = `${data.name} (${formattedDay}) http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
     currentTitleEl.classList = "pb-3";
     currentBodyEl.appendChild(currentTitleEl);
     //creates temperature p element
