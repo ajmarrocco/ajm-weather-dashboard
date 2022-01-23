@@ -47,13 +47,15 @@ var getCurrent = function(city){
 }
 
 var formattedDay = function(seconds){
+    //converst seconds to milliseconds
     var millisecondsDT = seconds * 1000;
-    console.log(millisecondsDT);
+    //gets date for milliseconds
     var dateObject = new Date(millisecondsDT);
-    console.log(dateObject);
-    var humanDateFormat = dateObject.toLocaleString();
-    console.log(humanDateFormat);
-    var formattedDate = humanDateFormat.split(",")[0];
+    //formats date into string
+    var stringFormat = dateObject.toLocaleString();
+    //splits date format keeping what is in front of the comma
+    var formattedDate = stringFormat.split(",")[0];
+    // returns formattedDate variable
     return formattedDate;
 }
 
@@ -67,22 +69,18 @@ var displayCurrent = function(data, information){
     dashboardEl.appendChild(currentBorderEl);
     currentBorderEl.appendChild(currentBodyEl);
     //creates title for body of card
-    // formattedDay(data.dt);
     var currentTitleEl = document.createElement("h5");
-    //adjusts UTC time based off of 
-    // var newDT = data.dt + information.timezone_offset;
-    // console.log(data.dt);
-    // console.log(newDT);
-    // var millisecondsDT = data.dt * 1000;
-    // console.log(millisecondsDT);
-    // var dateObject = new Date(millisecondsDT);
-    // console.log(dateObject);
-    // var humanDateFormat = dateObject.toLocaleString();
-    // console.log(humanDateFormat);
-    // var formattedDay = humanDateFormat.split(",")[0];
-    currentTitleEl.textContent = `${data.name} (${formattedDay(data.dt)}) http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+    //creates img for iconEl
+    var iconEl = document.createElement("img");
+    //sets text of title and calls on formattedDay function
+    currentTitleEl.textContent = `${data.name} (${formattedDay(data.dt)})`;
     currentTitleEl.classList = "pb-3";
+    //sets img source equal to the icon received
+    iconEl.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+    //adds alt to the description of the weather
+    iconEl.alt = `${data.weather[0].description}`;
     currentBodyEl.appendChild(currentTitleEl);
+    currentTitleEl.appendChild(iconEl);
     //creates temperature p element
     var tempEl = document.createElement("p");
     //adds degree symbol
@@ -100,9 +98,6 @@ var displayCurrent = function(data, information){
     var uviEl = document.createElement("p");
     uviEl.textContent = `UV Index: ${information.current.uvi}`;
     currentBodyEl.appendChild(uviEl);
-    // debugger;
-    // console.log(displayUVI.uviEl);
-    // console.log("uvi " + information.current.uvi);
 }
 
 searchButtonEl.addEventListener("click", getCityName);
