@@ -46,6 +46,17 @@ var getCurrent = function(city){
     })
 }
 
+var formattedDay = function(seconds){
+    var millisecondsDT = seconds * 1000;
+    console.log(millisecondsDT);
+    var dateObject = new Date(millisecondsDT);
+    console.log(dateObject);
+    var humanDateFormat = dateObject.toLocaleString();
+    console.log(humanDateFormat);
+    var formattedDate = humanDateFormat.split(",")[0];
+    return formattedDate;
+}
+
 var displayCurrent = function(data, information){
     //creates div for border of card
     var currentBorderEl = document.createElement("div");
@@ -56,19 +67,20 @@ var displayCurrent = function(data, information){
     dashboardEl.appendChild(currentBorderEl);
     currentBorderEl.appendChild(currentBodyEl);
     //creates title for body of card
+    // formattedDay(data.dt);
     var currentTitleEl = document.createElement("h5");
     //adjusts UTC time based off of 
-    var newDT = data.dt + information.timezone_offset;
+    // var newDT = data.dt + information.timezone_offset;
     // console.log(data.dt);
     // console.log(newDT);
-    var millisecondsDT = data.dt * 1000;
-    console.log(millisecondsDT);
-    var dateObject = new Date(millisecondsDT);
-    console.log(dateObject);
-    var humanDateFormat = dateObject.toLocaleString();
-    console.log(humanDateFormat);
-    var formattedDay = humanDateFormat.split(",")[0];
-    currentTitleEl.textContent = `${data.name} (${formattedDay}) http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+    // var millisecondsDT = data.dt * 1000;
+    // console.log(millisecondsDT);
+    // var dateObject = new Date(millisecondsDT);
+    // console.log(dateObject);
+    // var humanDateFormat = dateObject.toLocaleString();
+    // console.log(humanDateFormat);
+    // var formattedDay = humanDateFormat.split(",")[0];
+    currentTitleEl.textContent = `${data.name} (${formattedDay(data.dt)}) http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
     currentTitleEl.classList = "pb-3";
     currentBodyEl.appendChild(currentTitleEl);
     //creates temperature p element
