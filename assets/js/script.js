@@ -12,14 +12,9 @@ var getCityName = function(){
 }
 
 var getCurrent = function(city){
-
-    // var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q="+ city + "&appid=2c279aedc4b3d33df9584a1e023c4e2e";
-    
-    // console.log(apiUrl);
-    // console.log("https://api.openweathermap.org/data/2.5/onecall?lat=41.85&lon=-87.65&exclude=minutely,hourly,alerts&appid=2c279aedc4b3d33df9584a1e023c4e2e")
-
-    var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
-
+    //variable for api for city, uses imperial units for Fahrenheit
+    var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
+    console.log(apiUrl);
     // make a get request to url
     fetch(apiUrl).then(function(response) {
         // request was successful
@@ -36,21 +31,37 @@ var getCurrent = function(city){
     })
 }
 
-var displayCurrent = function(weather){
-    console.log("city " + weather.name);
-    console.log("date " + weather.dt);
-    console.log("temp " + weather.main.temp);
-    console.log("speed " + weather.wind.speed);
-    console.log("humidity " + weather.main.humidity);
-}
-
 var getFuture = function(longitiude, latitude){
     console.log("longitude " + longitiude);
     console.log("latitude " + latitude);
+
+    var apiSecondUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitiude}&exclude=minutely,hourly&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
+    console.log(apiSecondUrl);
+
+    // make a get request to url
+    fetch(apiSecondUrl).then(function(response) {
+        // request was successful
+        if (response.ok) {
+            response.json().then(function(data) {
+            displayUVI(data);
+            // displayFuture(data);
+            // getFuture(data.coord.lon,data.coord.lat)
+            })
+        } 
+    })
 }
 
-// var displayUVI = function(weather){
+var displayCurrent = function(info){
+    console.log("city " + info.name);
+    console.log("date " + info.dt);
+    console.log("icon " + info.weather.icon);
+    console.log("temp " + info.main.temp);
+    console.log("speed " + info.wind.speed);
+    console.log("humidity " + info.main.humidity);
+}
 
-// }
+var displayUVI = function(index){
+    console.log("uvi " + index.current.uvi);
+}
 
 searchButtonEl.addEventListener("click", getCityName);
