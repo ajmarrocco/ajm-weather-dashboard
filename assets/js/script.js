@@ -12,18 +12,56 @@ var getCityName = function(){
     }
 }
 
+// var getCurrent = function(city){
+//     //variable for api for city, uses imperial units for Fahrenheit
+//     var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
+//     console.log(apiUrl);
+//     debugger;
+//     // make a get request to url
+//     fetch(apiUrl).then(function(response) {
+//         // request was successful
+//         if (response.ok) {
+//             response.json().then(function(data) {
+//             getFuture(data.coord.lon,data.coord.lat);
+//             displayCurrent(data);
+//             })
+//         } else {
+//         // if not successful, redirect to homepage
+//             window.alert("Please enter a city name");
+//             document.location.replace("./index.html");
+//         }
+//     })
+// }
+
 var getCurrent = function(city){
     //variable for api for city, uses imperial units for Fahrenheit
     var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
     console.log(apiUrl);
-    debugger;
+    //debugger;
     // make a get request to url
     fetch(apiUrl).then(function(response) {
         // request was successful
         if (response.ok) {
             response.json().then(function(data) {
-            getFuture(data.coord.lon,data.coord.lat);
-            displayCurrent(data);
+            // getFuture(data.coord.lon,data.coord.lat);
+            // displayCurrent(data);
+            var apiSecondUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&exclude=minutely,hourly&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
+            console.log(apiSecondUrl);
+            //debugger;
+            // make a get request to url
+            fetch(apiSecondUrl).then(function(response) {
+                // request was successful
+                if (response.ok) {
+                    response.json().then(function(information) {
+                    displayCurrent(data, information);
+                    //debugger;
+                    // displayUVI(data);
+                    // displayFuture(data);
+                    // getFuture(data.coord.lon,data.coord.lat)
+                    })
+                } 
+            })
+
             })
         } else {
         // if not successful, redirect to homepage
@@ -33,36 +71,36 @@ var getCurrent = function(city){
     })
 }
 
-var getFuture = function(longitiude, latitude){
-    console.log("longitude " + longitiude);
-    console.log("latitude " + latitude);
+// var getFuture = function(longitiude, latitude){
+//     console.log("longitude " + longitiude);
+//     console.log("latitude " + latitude);
 
-    var apiSecondUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitiude}&exclude=minutely,hourly&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
-    console.log(apiSecondUrl);
-    debugger;
-    // make a get request to url
-    fetch(apiSecondUrl).then(function(response) {
-        // request was successful
-        if (response.ok) {
-            response.json().then(function(data) {
-            // displayCurrent(data);
-            debugger;
-            displayUVI(data);
-            // displayFuture(data);
-            // getFuture(data.coord.lon,data.coord.lat)
-            })
-        } 
-    })
-}
+//     var apiSecondUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitiude}&exclude=minutely,hourly&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
+//     console.log(apiSecondUrl);
+//     debugger;
+//     // make a get request to url
+//     fetch(apiSecondUrl).then(function(response) {
+//         // request was successful
+//         if (response.ok) {
+//             response.json().then(function(data) {
+//             // displayCurrent(data);
+//             debugger;
+//             displayUVI(data);
+//             // displayFuture(data);
+//             // getFuture(data.coord.lon,data.coord.lat)
+//             })
+//         } 
+//     })
+// }
 
-var displayUVI = function(index){
-    console.log("uvi " + index.current.uvi);
-    uviEl = index.current.uvi;
-    console.log(uviEl);
-    return uviEl;
-}
+// var displayUVI = function(index){
+//     console.log("uvi " + index.current.uvi);
+//     uviEl = index.current.uvi;
+//     console.log(uviEl);
+//     return uviEl;
+// }
 
-var displayCurrent = function(info){
+var displayCurrent = function(info, information){
     //creates div for border of card
     var currentBorderEl = document.createElement("div");
     currentBorderEl.classList = "card border-secondary mb-3";
@@ -89,9 +127,12 @@ var displayCurrent = function(info){
     var humidityEl = document.createElement("p");
     humidityEl.textContent = `Humidity: ${info.main.humidity} %`;
     currentBodyEl.appendChild(humidityEl);
-    debugger;
-    console.log(displayUVI.uviEl);
-    // console.log("uvi " + info.current.uvi);
+    var uviEl = document.createElement("p");
+    uviEl.textContent = `UV Index: ${information.current.uvi}`;
+    currentBodyEl.appendChild(uviEl);
+    // debugger;
+    // console.log(displayUVI.uviEl);
+    // console.log("uvi " + information.current.uvi);
 }
 
 searchButtonEl.addEventListener("click", getCityName);
