@@ -24,7 +24,7 @@ var getCurrent = function(city){
             response.json().then(function(data) {
             // getFuture(data.coord.lon,data.coord.lat);
             // displayCurrent(data);
-                var apiSecondUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&exclude=minutely,hourly&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
+                var apiSecondUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&units=imperial&exclude=minutely,hourly&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
                 console.log(apiSecondUrl);
                 //debugger;
                 // make a get request to url
@@ -87,11 +87,12 @@ var displayCurrent = function(data, information){
     currentBorderEl.appendChild(currentBodyEl);
     //creates title for body of card
     var currentTitleEl = document.createElement("h5");
-    //creates img for iconEl
-    var iconEl = document.createElement("img");
     //sets text of title and calls on formattedDay function
     currentTitleEl.textContent = `${data.name} (${formattedDay(data.dt)})`;
     currentTitleEl.classList = "pb-3";
+    //creates img for iconEl
+    var iconEl = document.createElement("img");
+    iconEl.classList = "current-icon"
     //sets img source equal to the icon received
     iconEl.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
     //adds alt to the description of the weather
@@ -126,17 +127,58 @@ var displayCurrent = function(data, information){
 }
 
 var displayFuture = function(data, information){
-    // var currentBorderEl = document.createElement("div");
-    // currentBorderEl.classList = "card border-secondary mb-3";
-    var futureBodyEl = document.createElement("div");
-    futureBodyEl.classList = "five-day";
+    // creates body for five day forecast
+    var futureContainerEl = document.createElement("div");
+    //creates class
+    futureContainerEl.classList = "five-day d-flex flex-column";
+    //creates title for five day forecast and text content
     var futureTitleEl = document.createElement("h6");
     futureTitleEl.textContent = "5-Day Forecast:"
-    //creates div for body of card
     futureTitleEl.classList = "five-day-title";
-    dashboardEl.appendChild(futureBodyEl);
-    futureBodyEl.appendChild(futureTitleEl);
-    // currentBorderEl.appendChild(currentBodyEl);
+    //appends to title
+    dashboardEl.appendChild(futureContainerEl);
+    futureContainerEl.appendChild(futureTitleEl);
+    //creates future Body element as well as class and text
+    var futureBodyEl = document.createElement("div");
+    futureBodyEl.classList = "row justify-content-around";
+    //appends to container
+    futureContainerEl.appendChild(futureBodyEl);
+    //creates future card element as well as class
+    var futureCardEl = document.createElement("div");
+    futureCardEl.classList = "pt-1 pl-2 pr-5 border-0 bg-dark text-light ";
+    //appends to body element
+    futureBodyEl.appendChild(futureCardEl);
+    //creates h6 element and texts and class lists
+
+    // TO DO: For loop
+    var futureDateEl = document.createElement("h6");
+    futureDateEl.textContent = `${formattedDay(information.daily[1].dt)}`;
+    futureDateEl.classList = "d-flex align-items-center";
+    futureCardEl.appendChild(futureDateEl);
+    //icon element
+    futureIconEl = document.createElement("img");
+    futureIconEl.classList = "future-icon";
+    //sets img source equal to the icon received
+    futureIconEl.src = `http://openweathermap.org/img/wn/${information.daily[1].weather[0].icon}@2x.png`;
+    //adds alt to the description of the weather
+    futureIconEl.alt = `${information.daily[1].weather[0].description}`;
+    //appends to card
+    futureCardEl.appendChild(futureIconEl);
+    //creates future temperature p element and text
+    var futureTempEl = document.createElement("p");
+    futureTempEl.textContent = `Temp: ${information.daily[1].temp.day} \u00B0F`
+    //appends to card
+    futureCardEl.appendChild(futureTempEl);
+    //creates future wind speed and text
+    var futureSpeedEl = document.createElement("p");
+    futureSpeedEl.textContent = `Wind: ${Math.round(100* information.daily[1].wind_speed * 2.23694)/100} MPH`;
+    //appends to card
+    futureCardEl.appendChild(futureSpeedEl);
+    //creates future humidity and text
+    var futureHumidityEl = document.createElement("p");
+    futureHumidityEl.textContent = `Humidity: ${information.daily[1].humidity} %`;
+    //appends to card
+    futureCardEl.appendChild(futureHumidityEl);
 }
 
 searchButtonEl.addEventListener("click", getCityName);
