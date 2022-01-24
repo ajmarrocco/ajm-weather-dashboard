@@ -33,7 +33,7 @@ var getCurrent = function(city){
                     if (response.ok) {
                         response.json().then(function(information) {
                         displayCurrent(data, information);
-                        displayFuture(data, information);
+                        displayFuture(information);
                         //debugger;
                         })
                     } 
@@ -126,7 +126,7 @@ var displayCurrent = function(data, information){
     uviEl.appendChild(uviSpanEl);
 }
 
-var displayFuture = function(data, information){
+var displayFuture = function(information){
     // creates body for five day forecast
     var futureContainerEl = document.createElement("div");
     //creates class
@@ -151,34 +151,36 @@ var displayFuture = function(data, information){
     //creates h6 element and texts and class lists
 
     // TO DO: For loop
-    var futureDateEl = document.createElement("h6");
-    futureDateEl.textContent = `${formattedDay(information.daily[1].dt)}`;
-    futureDateEl.classList = "d-flex align-items-center";
-    futureCardEl.appendChild(futureDateEl);
-    //icon element
-    futureIconEl = document.createElement("img");
-    futureIconEl.classList = "future-icon";
-    //sets img source equal to the icon received
-    futureIconEl.src = `http://openweathermap.org/img/wn/${information.daily[1].weather[0].icon}@2x.png`;
-    //adds alt to the description of the weather
-    futureIconEl.alt = `${information.daily[1].weather[0].description}`;
-    //appends to card
-    futureCardEl.appendChild(futureIconEl);
-    //creates future temperature p element and text
-    var futureTempEl = document.createElement("p");
-    futureTempEl.textContent = `Temp: ${information.daily[1].temp.day} \u00B0F`
-    //appends to card
-    futureCardEl.appendChild(futureTempEl);
-    //creates future wind speed and text
-    var futureSpeedEl = document.createElement("p");
-    futureSpeedEl.textContent = `Wind: ${Math.round(100* information.daily[1].wind_speed * 2.23694)/100} MPH`;
-    //appends to card
-    futureCardEl.appendChild(futureSpeedEl);
-    //creates future humidity and text
-    var futureHumidityEl = document.createElement("p");
-    futureHumidityEl.textContent = `Humidity: ${information.daily[1].humidity} %`;
-    //appends to card
-    futureCardEl.appendChild(futureHumidityEl);
+    for(let i=1;i<(information.daily.length-2);i++){
+        var futureDateEl = document.createElement("h6");
+        futureDateEl.textContent = `${formattedDay(information.daily[i].dt)}`;
+        futureDateEl.classList = "d-flex align-items-center";
+        futureCardEl.appendChild(futureDateEl);
+        //icon element
+        futureIconEl = document.createElement("img");
+        futureIconEl.classList = "future-icon";
+        //sets img source equal to the icon received
+        futureIconEl.src = `http://openweathermap.org/img/wn/${information.daily[i].weather[0].icon}@2x.png`;
+        //adds alt to the description of the weather
+        futureIconEl.alt = `${information.daily[i].weather[0].description}`;
+        //appends to card
+        futureCardEl.appendChild(futureIconEl);
+        //creates future temperature p element and text
+        var futureTempEl = document.createElement("p");
+        futureTempEl.textContent = `Temp: ${information.daily[i].temp.day} \u00B0F`
+        //appends to card
+        futureCardEl.appendChild(futureTempEl);
+        //creates future wind speed and text
+        var futureSpeedEl = document.createElement("p");
+        futureSpeedEl.textContent = `Wind: ${Math.round(100* information.daily[i].wind_speed * 2.23694)/100} MPH`;
+        //appends to card
+        futureCardEl.appendChild(futureSpeedEl);
+        //creates future humidity and text
+        var futureHumidityEl = document.createElement("p");
+        futureHumidityEl.textContent = `Humidity: ${information.daily[i].humidity} %`;
+        //appends to card
+        futureCardEl.appendChild(futureHumidityEl);
+    }
 }
 
 searchButtonEl.addEventListener("click", getCityName);
