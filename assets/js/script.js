@@ -143,18 +143,18 @@ var displayFuture = function(information){
     futureBodyEl.classList = "row justify-content-around";
     //appends to container
     futureContainerEl.appendChild(futureBodyEl);
-    //creates future card element as well as class
-    var futureCardEl = document.createElement("div");
-    futureCardEl.classList = "pt-1 pl-2 pr-5 border-0 bg-dark text-light ";
-    //appends to body element
-    futureBodyEl.appendChild(futureCardEl);
-    //creates h6 element and texts and class lists
 
-    // TO DO: For loop
+    // creates for loop for the next five days
     for(let i=1;i<(information.daily.length-2);i++){
+        var futureCardEl = document.createElement("div");
+        futureCardEl.classList = "pt-1 pl-2 pr-5 mb-2 border-0 bg-dark text-light ";
+        //appends to body element
+        futureBodyEl.appendChild(futureCardEl);
+        //creates future date header
         var futureDateEl = document.createElement("h6");
         futureDateEl.textContent = `${formattedDay(information.daily[i].dt)}`;
         futureDateEl.classList = "d-flex align-items-center";
+        //appends to card
         futureCardEl.appendChild(futureDateEl);
         //icon element
         futureIconEl = document.createElement("img");
