@@ -33,6 +33,7 @@ var getCurrent = function(city){
                     if (response.ok) {
                         response.json().then(function(information) {
                         displayCurrent(data, information);
+                        displayFuture(data, information);
                         //debugger;
                         })
                     } 
@@ -122,6 +123,20 @@ var displayCurrent = function(data, information){
     //appends UVI element and span
     currentBodyEl.appendChild(uviEl);
     uviEl.appendChild(uviSpanEl);
+}
+
+var displayFuture = function(data, information){
+    // var currentBorderEl = document.createElement("div");
+    // currentBorderEl.classList = "card border-secondary mb-3";
+    var futureBodyEl = document.createElement("div");
+    futureBodyEl.classList = "five-day";
+    var futureTitleEl = document.createElement("h6");
+    futureTitleEl.textContent = "5-Day Forecast:"
+    //creates div for body of card
+    futureTitleEl.classList = "five-day-title";
+    dashboardEl.appendChild(futureBodyEl);
+    futureBodyEl.appendChild(futureTitleEl);
+    // currentBorderEl.appendChild(currentBodyEl);
 }
 
 searchButtonEl.addEventListener("click", getCityName);
