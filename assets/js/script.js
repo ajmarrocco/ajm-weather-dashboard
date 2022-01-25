@@ -51,12 +51,16 @@ var listButton = function(i, buttonName){
     buttonEl.classList = "search-btn w-100";
     console.log(i);
     listEl.appendChild(buttonEl);
+    var buttonID = buttonEl.getAttribute("id");
+    var histEl = document.getElementById(buttonID);
 
-    listEl.addEventListener("click", function(){
-        debugger;
-        console.log(i);
-        var histEl = document.getElementById(`city${i}`);
-        console.log(histEl);
+    histEl.addEventListener("click", function(){
+        // debugger;
+        console.log(buttonID);
+        // console.log(buttonContent);
+        // var histEl = document.getElementById(`city${i}`);
+        console.log(histEl.textContent);
+        getCurrent(histEl.textContent);
     });
 }
 
