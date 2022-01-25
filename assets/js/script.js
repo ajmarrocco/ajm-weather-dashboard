@@ -1,15 +1,52 @@
 var searchButtonEl = document.querySelector("#search-btn");
 var cityEl = document.querySelector("#city-input");
 var dashboardEl = document.querySelector("#dashboard");
+var listEl = document.querySelector("#city-list");
+var i = 0;
 
 var getCityName = function(){
     var cityName = cityEl.value.trim();
     if(cityName){
-        getCurrent(cityName)
+        getCurrent(cityName);
+        savingName(cityName);
+        //sets contents to clear
+        cityEl.value = "";
     } else{
         window.alert("Please enter a city name");
         document.location.replace("./index.html");
     }
+}
+
+var savingName = function(city){
+    localStorage.setItem("city" + i, city);
+    getName(i, city);
+    i++;
+}
+
+var getName = function(i, city){
+    localStorage.getItem("city" + i, city);
+    listButton(i, city);
+}
+
+var listButton = function(i, buttonName){
+    var buttonEl = document.createElement("button");
+    buttonEl.textContent = buttonName;
+    buttonEl.setAttribute("id", "city" + i);
+    buttonEl.classList = "search-btn w-100";
+    listEl.appendChild(buttonEl);
+}
+
+var getHistory = function(i, city){
+    // i = 1;
+    // town = "";
+    // debugger;
+    localStorage.getItem("city" + i, city);
+    var histEl = document.getElementById(`city${i}`);
+    // debugger;
+    console.log(histEl);
+    // var history = histEl.textContent;
+    // console.log(history)
+    getCurrent(city);
 }
 
 var getCurrent = function(city){
@@ -184,3 +221,4 @@ var displayFuture = function(information){
 }
 
 searchButtonEl.addEventListener("click", getCityName);
+listEl.addEventListener("click", getHistory);
