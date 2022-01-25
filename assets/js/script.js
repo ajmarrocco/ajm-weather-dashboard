@@ -1,7 +1,6 @@
 var searchButtonEl = document.querySelector("#search-btn");
 var cityEl = document.querySelector("#city-input");
 var dashboardEl = document.querySelector("#dashboard");
-var listEl = document.querySelector("#city-list");
 var i = 0;
 
 var getCityName = function(){
@@ -28,25 +27,37 @@ var getName = function(i, city){
     listButton(i, city);
 }
 
+// var getHistory = function(i, buttonName){
+//     i = 1;
+//     // town = "";
+//     // debugger;
+//     // var object = 
+//     // var object = localStorage.getItem(value);
+//     // console.log(object);
+//     console.log(i);
+//     var histEl = document.getElementById(`city${i}`);
+//     console.log(histEl);
+//     // // var history = histEl.textContent;
+//     // // console.log(history)
+//     // getCurrent(city);
+// }
+
 var listButton = function(i, buttonName){
+    var listEl = document.querySelector("#city-list");
+    listEl.classList = "list";
     var buttonEl = document.createElement("button");
     buttonEl.textContent = buttonName;
     buttonEl.setAttribute("id", "city" + i);
     buttonEl.classList = "search-btn w-100";
+    console.log(i);
     listEl.appendChild(buttonEl);
-}
 
-var getHistory = function(i, city){
-    // i = 1;
-    // town = "";
-    // debugger;
-    localStorage.getItem("city" + i, city);
-    var histEl = document.getElementById(`city${i}`);
-    // debugger;
-    console.log(histEl);
-    // var history = histEl.textContent;
-    // console.log(history)
-    getCurrent(city);
+    listEl.addEventListener("click", function(){
+        debugger;
+        console.log(i);
+        var histEl = document.getElementById(`city${i}`);
+        console.log(histEl);
+    });
 }
 
 var getCurrent = function(city){
@@ -221,4 +232,4 @@ var displayFuture = function(information){
 }
 
 searchButtonEl.addEventListener("click", getCityName);
-listEl.addEventListener("click", getHistory);
+// listEl.addEventListener("click", getHistory);
