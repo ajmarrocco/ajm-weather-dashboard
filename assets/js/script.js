@@ -3,6 +3,7 @@ var cityEl = document.querySelector("#city-input");
 var dashboardEl = document.querySelector("#dashboard");
 var i = 0;
 
+//gets city name from input
 var getCityName = function(){
     var cityName = cityEl.value.trim();
     if(cityName){
@@ -12,36 +13,21 @@ var getCityName = function(){
         cityEl.value = "";
     } else{
         window.alert("Please enter a city name");
-        document.location.replace("./index.html");
+        // document.location.replace("./index.html");
     }
 }
-
+//saves name in local storage
 var savingName = function(city){
     localStorage.setItem("city" + i, city);
     getName(i, city);
     i++;
 }
-
+//gets it from local storage
 var getName = function(i, city){
     localStorage.getItem("city" + i, city);
-    listButton(i, city);
+    // listButton(i, city);
 }
-
-// var getHistory = function(i, buttonName){
-//     i = 1;
-//     // town = "";
-//     // debugger;
-//     // var object = 
-//     // var object = localStorage.getItem(value);
-//     // console.log(object);
-//     console.log(i);
-//     var histEl = document.getElementById(`city${i}`);
-//     console.log(histEl);
-//     // // var history = histEl.textContent;
-//     // // console.log(history)
-//     // getCurrent(city);
-// }
-
+//creates list button
 var listButton = function(i, buttonName){
     var listEl = document.querySelector("#city-list");
     listEl.classList = "list";
@@ -54,28 +40,24 @@ var listButton = function(i, buttonName){
     var buttonID = buttonEl.getAttribute("id");
     var histEl = document.getElementById(buttonID);
 
+    //adds event listener for button with specific id
     histEl.addEventListener("click", function(){
-        // debugger;
-        console.log(buttonID);
-        // console.log(buttonContent);
-        // var histEl = document.getElementById(`city${i}`);
-        console.log(histEl.textContent);
+        // Goes to get current function
         getCurrent(histEl.textContent);
     });
 }
-
+//creates get current function
 var getCurrent = function(city){
     //variable for api for city, uses imperial units for Fahrenheit
     var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
-    console.log(apiUrl);
-    //debugger;
+    // console.log(apiUrl);
     // make a get request to url
+    console.log(i);
     fetch(apiUrl).then(function(response) {
         // request was successful
         if (response.ok) {
             response.json().then(function(data) {
-            // getFuture(data.coord.lon,data.coord.lat);
-            // displayCurrent(data);
+                //fetches second URL
                 var apiSecondUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&units=imperial&exclude=minutely,hourly&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
                 console.log(apiSecondUrl);
                 //debugger;
@@ -86,15 +68,19 @@ var getCurrent = function(city){
                         response.json().then(function(information) {
                         displayCurrent(data, information);
                         displayFuture(information);
-                        //debugger;
                         })
                     } 
+                    
                 })
             })
+            //transfer this to the savingName and create a for loop and override i variable in display Future
+            if (!localStorage.getItem("city" + i, city)){
+                listButton(i, city);
+            }
         } else {
         // if not successful, redirect to homepage
             window.alert("Please enter a city name");
-            document.location.replace("./index.html");
+            // document.location.replace("./index.html");
         }
     })
 }
@@ -129,6 +115,8 @@ var checkUVI = function(index, element){
 
 
 var displayCurrent = function(data, information){
+    //clears dashboard
+    dashboardEl.innerHTML = "";
     //creates div for border of card
     var currentBorderEl = document.createElement("div");
     currentBorderEl.classList = "card border-secondary mb-3";
