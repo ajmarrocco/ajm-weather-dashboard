@@ -25,7 +25,7 @@ var savingName = function(city){
 //gets it from local storage
 var getName = function(i, city){
     localStorage.getItem("city" + i, city);
-    // listButton(i, city);
+    listButton(i, city);
 }
 //creates list button
 var listButton = function(i, buttonName){
@@ -73,10 +73,10 @@ var getCurrent = function(city){
                     
                 })
             })
-            //transfer this to the savingName and create a for loop and override i variable in display Future
-            if (!localStorage.getItem("city" + i, city)){
-                listButton(i, city);
-            }
+            //TO DO: transfer this to the savingName and create a for loop and override i variable in display Future
+            // if (!localStorage.getItem("city" + i, city)){
+            //     listButton(i, city);
+            // }
         } else {
         // if not successful, redirect to homepage
             window.alert("Please enter a city name");
