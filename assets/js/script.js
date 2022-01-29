@@ -1,3 +1,4 @@
+//declares variables
 var searchButtonEl = document.querySelector("#search-btn");
 var cityEl = document.querySelector("#city-input");
 var dashboardEl = document.querySelector("#dashboard");
@@ -5,58 +6,64 @@ var i = 0;
 
 //gets city name from input
 var getCityName = function(){
+    //gets input values and trims for white space
     var cityName = cityEl.value.trim();
+    //if there is something in input
     if(cityName){
+        //runs function getCurrent
         getCurrent(cityName);
         //sets contents to clear
         cityEl.value = "";
     } else{
+        //shows alert if there is nothing in input box
         window.alert("Please enter a city name");
-        // document.location.replace("./index.html");
     }
 }
 //saves name in local storage
 var savingName = function(city){
-    // debugger;
+    // checks if name is already in storage
     for (let k=0;k<localStorage.length;k++){
         //declare variable for key initials
-        // debugger;
         const key = localStorage.key(k);
-        console.log(key);
-        console.log(localStorage.getItem(key));
+        //if the city is already in local storage than return
         if (localStorage.getItem(key) === city){
             return;
         }
     }
-    // debugger;
+    // if city is false then return
     if(!city){
         return;
     }
+    //sets city with index (i) number declared in top of js file 
     localStorage.setItem("city" + i, city);
+    //goes to get Name from local storage
     getName(i, city);
+    //increments i value
     i++;
 }
 //gets it from local storage
 var getName = function(i, city){
-    // console.log(localStorage.getItem("city" + i, city));
-    // debugger;
+    //gets item from local storage
     localStorage.getItem("city" + i, city);
+    //runs listButton function
     listButton(i, city);
 
 }
 //creates list button
 var listButton = function(i, buttonName){
+    //creates listEl variable and gives class list
     var listEl = document.querySelector("#city-list");
     listEl.classList = "list";
+    //creates button and sets id, class and text contents
     var buttonEl = document.createElement("button");
     buttonEl.textContent = buttonName;
     buttonEl.setAttribute("id", "city" + i);
     buttonEl.classList = "search-btn w-100 fw-bold border-0 p-2 rounded mb-1";
-    console.log(i);//DELETE
+    //appends button to list and gives it a button
     listEl.appendChild(buttonEl);
     var buttonID = buttonEl.getAttribute("id");
+    //sets variables to get element by id
     var histEl = document.getElementById(buttonID);
-
     //adds event listener for button with specific id
     histEl.addEventListener("click", function(){
         // Goes to get current function
@@ -67,40 +74,32 @@ var listButton = function(i, buttonName){
 var getCurrent = function(city){
     //variable for api for city, uses imperial units for Fahrenheit
     var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
-    // console.log(apiUrl);
     // make a get request to url
-    console.log(i);//DELETE
     fetch(apiUrl).then(function(response) {
         // request was successful
         if (response.ok) {
             response.json().then(function(data) {
                 //fetches second URL
                 var apiSecondUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&units=imperial&exclude=minutely,hourly&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
-                console.log(apiSecondUrl);//DELETE
-                //debugger;
                 // make a get request to url
                 fetch(apiSecondUrl).then(function(response) {
                     // request was successful
                     if (response.ok) {
                         response.json().then(function(information) {
-                        displayCurrent(data, information);
-                        displayFuture(information);
+                            //runs both functions
+                            displayCurrent(data, information);
+                            displayFuture(information);
                         })
                     }
                 })
             })
-            //TO DO: transfer this to the savingName and create a for loop and override i variable in display Future
-            // if (!localStorage.getItem("city" + i, city)){
-            //     listButton(i, city);
-            // }
         } else {
         // if not successful, show error message
             window.alert("Error: " + response.statusText);
-            // document.location.replace("./index.html");
         }
     })
 }
-
+//creates formattedDay function
 var formattedDay = function(seconds){
     //converst seconds to milliseconds
     var millisecondsDT = seconds * 1000;
@@ -118,13 +117,13 @@ var formattedDay = function(seconds){
 //checks UVI value for favorable, moderate, severe
 var checkUVI = function(index, element){
     if(index > 6){
-        //if it is a severe index, make bg color red
+        //if it is a severe index (greater than 6), make bg color red
         return element.classList = "bg-danger pt-1 pb-1 pl-3 pr-3 text-light rounded"
     } else if (index <= 6 && index >= 3){
-        //if it is a moderate index, make bg color yellow
+        //if it is a moderate index (less than or equal to 6/greater than or equal to 3), make bg color yellow
         return element.classList = "bg-warning pt-1 pb-1 pl-3 pr-3 text-light rounded"
     } else {
-        //if it is a favorable index, make bg color green
+        //if it is a favorable index (less than 3), make bg color green
         return element.classList = "bg-success pt-1 pb-1 pl-3 pr-3 text-light rounded"
     }
 }
@@ -180,7 +179,7 @@ var displayCurrent = function(data, information){
     //appends UVI element and span
     currentBodyEl.appendChild(uviEl);
     uviEl.appendChild(uviSpanEl);
-    // console.log(data.name);
+    //runs saving name function
     savingName(data.name);
 }
 
