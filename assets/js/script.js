@@ -8,7 +8,6 @@ var getCityName = function(){
     var cityName = cityEl.value.trim();
     if(cityName){
         getCurrent(cityName);
-        savingName(cityName);
         //sets contents to clear
         cityEl.value = "";
     } else{
@@ -18,14 +17,32 @@ var getCityName = function(){
 }
 //saves name in local storage
 var savingName = function(city){
+    // debugger;
+    for (let k=0;k<localStorage.length;k++){
+        //declare variable for key initials
+        // debugger;
+        const key = localStorage.key(k);
+        console.log(key);
+        console.log(localStorage.getItem(key));
+        if (localStorage.getItem(key) === city){
+            return;
+        }
+    }
+    // debugger;
+    if(!city){
+        return;
+    }
     localStorage.setItem("city" + i, city);
     getName(i, city);
     i++;
 }
 //gets it from local storage
 var getName = function(i, city){
+    // console.log(localStorage.getItem("city" + i, city));
+    // debugger;
     localStorage.getItem("city" + i, city);
     listButton(i, city);
+
 }
 //creates list button
 var listButton = function(i, buttonName){
@@ -69,8 +86,7 @@ var getCurrent = function(city){
                         displayCurrent(data, information);
                         displayFuture(information);
                         })
-                    } 
-                    
+                    }
                 })
             })
             //TO DO: transfer this to the savingName and create a for loop and override i variable in display Future
@@ -78,8 +94,8 @@ var getCurrent = function(city){
             //     listButton(i, city);
             // }
         } else {
-        // if not successful, redirect to homepage
-            window.alert("Please enter a city name");
+        // if not successful, show error message
+            window.alert("Error: " + response.statusText);
             // document.location.replace("./index.html");
         }
     })
@@ -164,6 +180,8 @@ var displayCurrent = function(data, information){
     //appends UVI element and span
     currentBodyEl.appendChild(uviEl);
     uviEl.appendChild(uviSpanEl);
+    // console.log(data.name);
+    savingName(data.name);
 }
 
 var displayFuture = function(information){
@@ -185,14 +203,14 @@ var displayFuture = function(information){
     futureContainerEl.appendChild(futureBodyEl);
 
     // creates for loop for the next five days
-    for(let i=1;i<(information.daily.length-2);i++){
+    for(let j=1;j<(information.daily.length-2);j++){
         var futureCardEl = document.createElement("div");
         futureCardEl.classList = "pt-1 pl-2 pr-5 mb-2 border-0 bg-dark text-light ";
         //appends to body element
         futureBodyEl.appendChild(futureCardEl);
         //creates future date header
         var futureDateEl = document.createElement("h6");
-        futureDateEl.textContent = `${formattedDay(information.daily[i].dt)}`;
+        futureDateEl.textContent = `${formattedDay(information.daily[j].dt)}`;
         futureDateEl.classList = "d-flex align-items-center";
         //appends to card
         futureCardEl.appendChild(futureDateEl);
@@ -200,24 +218,24 @@ var displayFuture = function(information){
         futureIconEl = document.createElement("img");
         futureIconEl.classList = "future-icon";
         //sets img source equal to the icon received
-        futureIconEl.src = `http://openweathermap.org/img/wn/${information.daily[i].weather[0].icon}@2x.png`;
+        futureIconEl.src = `http://openweathermap.org/img/wn/${information.daily[j].weather[0].icon}@2x.png`;
         //adds alt to the description of the weather
-        futureIconEl.alt = `${information.daily[i].weather[0].description}`;
+        futureIconEl.alt = `${information.daily[j].weather[0].description}`;
         //appends to card
         futureCardEl.appendChild(futureIconEl);
         //creates future temperature p element and text
         var futureTempEl = document.createElement("p");
-        futureTempEl.textContent = `Temp: ${information.daily[i].temp.day} \u00B0F`
+        futureTempEl.textContent = `Temp: ${information.daily[j].temp.day} \u00B0F`
         //appends to card
         futureCardEl.appendChild(futureTempEl);
         //creates future wind speed and text
         var futureSpeedEl = document.createElement("p");
-        futureSpeedEl.textContent = `Wind: ${Math.round(100* information.daily[i].wind_speed * 2.23694)/100} MPH`;
+        futureSpeedEl.textContent = `Wind: ${Math.round(100* information.daily[j].wind_speed * 2.23694)/100} MPH`;
         //appends to card
         futureCardEl.appendChild(futureSpeedEl);
         //creates future humidity and text
         var futureHumidityEl = document.createElement("p");
-        futureHumidityEl.textContent = `Humidity: ${information.daily[i].humidity} %`;
+        futureHumidityEl.textContent = `Humidity: ${information.daily[j].humidity} %`;
         //appends to card
         futureCardEl.appendChild(futureHumidityEl);
     }
