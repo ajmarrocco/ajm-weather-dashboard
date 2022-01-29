@@ -5,48 +5,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- cdn links -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Staatliches&display=swap" rel="stylesheet">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css"/>
+    <!-- favicon -->
     <link rel="icon" type="image/jpg" href = "./assets/images/favicon.png">
+    <!-- links css file -->
     <link rel="stylesheet" href="./assets/css/style.css" />
+    <!-- sets title of page -->
     <title>Weather Dashboard</title>
 </head>
 
 <body>
-
+    <!-- styles header with classes -->
     <header class="text-center text-light d-flex">
+        <!-- style h3 -->
         <h3 class="col-12 m-auto pt-2 pb-3">
                 Weather Dashboard
         </h3>
     </header>
     <main class="m-3">
         <div class="row">
-            <!--  -->
+            <!-- makes search for city to 3 columns  -->
             <div class="col-3">
                 <div>
+                    <!-- sets h3 -->
                     <h3 class="fw-bolder">
                         Search for a City:
                     </h3>
+                    <!-- creates input button and p list elements -->
                     <input type="text" id="city-input" class="w-100 p-2 mt-2 mb-3" placeholder="San Diego">
                     <button type="button" id="search-btn" class="bg-info p-2 fw-bold text-light border-0 w-100 rounded mb-3">Search</button>
                     <p id="city-list">
                     </p>
                 </div>
             </div>
-            <!--  -->
+            <!-- makes dashboard 9 columns -->
             <div id="dashboard" class="col-9">
             </div>
         </div>
     </main>
-
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> -->
+    <!-- links js file to html -->
     <script src="./assets/js/script.js"></script>
 </body>
 

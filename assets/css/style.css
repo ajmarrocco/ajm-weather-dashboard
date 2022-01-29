@@ -1,23 +1,25 @@
+/* styles creates gradient backgroud for header */
+header{
+    background-image: linear-gradient(to right, #0749ff, #120033);
+}
+
+/* styles height of current icon */
 .current-icon{
     height: 30px;
 }
-
+/* styles height and width of future icon */
 .future-icon{
     height: 30px;
     width: 30px;
 }
-
+/* creates line above list */
 .list{
     border-top: solid 2px gray;
 }
-
+/* styles search button */
 .search-btn{
     margin-top: 10px;
     list-style-type: none;
     background-color: rgb(180, 177, 177);
 
-}
-
-header{
-    background-image: linear-gradient(to right, #0749ff, #120033);
 }
