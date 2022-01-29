@@ -8,11 +8,16 @@
 }
 
 .list{
-    list-style-type: none;
     border-top: solid 2px gray;
 }
 
 .search-btn{
     margin-top: 10px;
     list-style-type: none;
+    background-color: rgb(180, 177, 177);
+
+}
+
+header{
+    background-image: linear-gradient(to right, #0749ff, #120033);
 }

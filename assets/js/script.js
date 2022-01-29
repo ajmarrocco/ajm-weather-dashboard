@@ -34,8 +34,8 @@ var listButton = function(i, buttonName){
     var buttonEl = document.createElement("button");
     buttonEl.textContent = buttonName;
     buttonEl.setAttribute("id", "city" + i);
-    buttonEl.classList = "search-btn w-100";
-    console.log(i);
+    buttonEl.classList = "search-btn w-100 fw-bold border-0 p-2 rounded mb-1";
+    console.log(i);//DELETE
     listEl.appendChild(buttonEl);
     var buttonID = buttonEl.getAttribute("id");
     var histEl = document.getElementById(buttonID);
@@ -52,14 +52,14 @@ var getCurrent = function(city){
     var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
     // console.log(apiUrl);
     // make a get request to url
-    console.log(i);
+    console.log(i);//DELETE
     fetch(apiUrl).then(function(response) {
         // request was successful
         if (response.ok) {
             response.json().then(function(data) {
                 //fetches second URL
                 var apiSecondUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&units=imperial&exclude=minutely,hourly&appid=2c279aedc4b3d33df9584a1e023c4e2e`;
-                console.log(apiSecondUrl);
+                console.log(apiSecondUrl);//DELETE
                 //debugger;
                 // make a get request to url
                 fetch(apiSecondUrl).then(function(response) {
@@ -128,7 +128,7 @@ var displayCurrent = function(data, information){
     //creates title for body of card
     var currentTitleEl = document.createElement("h5");
     //sets text of title and calls on formattedDay function
-    currentTitleEl.textContent = `${data.name} (${formattedDay(data.dt)})`;
+    currentTitleEl.textContent = `${data.name} (${formattedDay(information.daily[0].dt)})`;
     currentTitleEl.classList = "pb-3";
     //creates img for iconEl
     var iconEl = document.createElement("img");
